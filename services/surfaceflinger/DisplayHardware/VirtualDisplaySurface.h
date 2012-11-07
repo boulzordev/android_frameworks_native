@@ -119,6 +119,7 @@ private:
     virtual status_t allowAllocation(bool allow);
     virtual status_t setGenerationNumber(uint32_t generationNumber);
     virtual String8 getConsumerName() const override;
+    virtual status_t setBuffersSize(int size);
 
     //
     // Utility methods

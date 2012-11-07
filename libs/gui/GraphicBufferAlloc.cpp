@@ -26,6 +26,7 @@ namespace android {
 // ----------------------------------------------------------------------------
 
 GraphicBufferAlloc::GraphicBufferAlloc() {
+    mBufferSize = 0;
 }
 
 GraphicBufferAlloc::~GraphicBufferAlloc() {
@@ -34,7 +35,7 @@ GraphicBufferAlloc::~GraphicBufferAlloc() {
 sp<GraphicBuffer> GraphicBufferAlloc::createGraphicBuffer(uint32_t width,
         uint32_t height, PixelFormat format, uint32_t usage, status_t* error) {
     sp<GraphicBuffer> graphicBuffer(
-            new GraphicBuffer(width, height, format, usage));
+            new GraphicBuffer(width, height, format, usage, mBufferSize));
     status_t err = graphicBuffer->initCheck();
     *error = err;
     if (err != 0 || graphicBuffer->handle == 0) {
@@ -47,6 +48,10 @@ sp<GraphicBuffer> GraphicBufferAlloc::createGraphicBuffer(uint32_t width,
         return 0;
     }
     return graphicBuffer;
+}
+
+void GraphicBufferAlloc::setGraphicBufferSize(int size) {
+    mBufferSize = size;
 }
 
 // ----------------------------------------------------------------------------

@@ -262,9 +262,14 @@ private:
 
     void updateCursorAsync();
 
+    // Read virtual display properties
+    void setVirtualDisplayData( int32_t hwcDisplayId,
+                                const sp<IGraphicBufferProducer>& sink);
+
     /* handlePageFlip - latch a new buffer if available and compute the dirty
      * region. Returns whether a new buffer has been latched, i.e., whether it
      * is necessary to perform a refresh during this vsync.
+
      */
     bool handlePageFlip();
 

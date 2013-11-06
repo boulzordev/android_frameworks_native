@@ -76,7 +76,8 @@ public:
             const sp<IGraphicBufferProducer>& sink,
             const sp<IGraphicBufferProducer>& bqProducer,
             const sp<IGraphicBufferConsumer>& bqConsumer,
-            const String8& name);
+            const String8& name,
+            bool secure);
 
     //
     // DisplaySurface interface
@@ -128,6 +129,7 @@ private:
     void updateQueueBufferOutput(const QueueBufferOutput& qbo);
     void resetPerFrameState();
     status_t refreshOutputBuffer();
+    void setOutputUsage();
 
     // Both the sink and scratch buffer pools have their own set of slots
     // ("source slots", or "sslot"). We have to merge these into the single
@@ -155,6 +157,9 @@ private:
     // a call on whether the display is to be composed/copied by HWC
     // or not.
     int32_t mDisplayId;
+
+    // secure flag
+    bool mSecure;
 
     //
     // Inter-frame state

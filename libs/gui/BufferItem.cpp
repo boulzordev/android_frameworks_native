@@ -35,6 +35,7 @@ BufferItem::BufferItem() :
     mAcquireCalled(false),
     mTransformToDisplayInverse(false) {
     mCrop.makeInvalid();
+    mDirtyRect.makeInvalid();
 }
 
 BufferItem::~BufferItem() {}
@@ -48,6 +49,7 @@ static void addAligned(size_t& size, T /* value */) {
 size_t BufferItem::getPodSize() const {
     size_t size = 0;
     addAligned(size, mCrop);
+    addAligned(size, mDirtyRect);
     addAligned(size, mTransform);
     addAligned(size, mScalingMode);
     addAligned(size, mTimestampLo);
@@ -133,6 +135,7 @@ status_t BufferItem::flatten(
     }
 
     writeAligned(buffer, size, mCrop);
+    writeAligned(buffer, size, mDirtyRect);
     writeAligned(buffer, size, mTransform);
     writeAligned(buffer, size, mScalingMode);
     writeAligned(buffer, size, mTimestampLo);
@@ -189,6 +192,7 @@ status_t BufferItem::unflatten(
     }
 
     readAligned(buffer, size, mCrop);
+    readAligned(buffer, size, mDirtyRect);
     readAligned(buffer, size, mTransform);
     readAligned(buffer, size, mScalingMode);
     readAligned(buffer, size, mTimestampLo);

@@ -284,15 +284,24 @@ public:
                   dataSpace(dataSpace), crop(crop), scalingMode(scalingMode),
                   transform(transform), stickyTransform(sticky),
                   async(async), fence(fence), surfaceDamage() { }
+
+        inline QueueBufferInput(int64_t timestamp, bool isAutoTimestamp,
+                android_dataspace dataSpace, const Rect& crop, const Rect& dirtyRect, int scalingMode, uint32_t transform, bool async,
+                const sp<Fence>& fence, uint32_t sticky = 0)
+        : timestamp(timestamp), isAutoTimestamp(isAutoTimestamp), dataSpace(dataSpace), crop(crop),
+          dirtyRect(dirtyRect),scalingMode(scalingMode), transform(transform), stickyTransform(sticky),
+          async(async), fence(fence) { }
+
         inline void deflate(int64_t* outTimestamp, bool* outIsAutoTimestamp,
                 android_dataspace* outDataSpace,
-                Rect* outCrop, int* outScalingMode,
+                Rect* outCrop, Rect* outDirtyRect, int* outScalingMode,
                 uint32_t* outTransform, bool* outAsync, sp<Fence>* outFence,
                 uint32_t* outStickyTransform = NULL) const {
             *outTimestamp = timestamp;
             *outIsAutoTimestamp = bool(isAutoTimestamp);
             *outDataSpace = dataSpace;
             *outCrop = crop;
+            *outDirtyRect = dirtyRect;
             *outScalingMode = scalingMode;
             *outTransform = transform;
             *outAsync = bool(async);
@@ -316,6 +325,7 @@ public:
         int isAutoTimestamp;
         android_dataspace dataSpace;
         Rect crop;
+        Rect dirtyRect;
         int scalingMode;
         uint32_t transform;
         uint32_t stickyTransform;

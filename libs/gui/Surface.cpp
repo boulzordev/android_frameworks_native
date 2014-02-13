@@ -68,6 +68,7 @@ Surface::Surface(
     mTimestamp = NATIVE_WINDOW_TIMESTAMP_AUTO;
     mDataSpace = HAL_DATASPACE_UNKNOWN;
     mCrop.clear();
+    mDirtyRect.clear();
     mScalingMode = NATIVE_WINDOW_SCALING_MODE_FREEZE;
     mTransform = 0;
     mStickyTransform = 0;
@@ -188,6 +189,12 @@ int Surface::hook_perform(ANativeWindow* window, int operation, ...) {
     va_start(args, operation);
     Surface* c = getSelf(window);
     return c->perform(operation, args);
+}
+
+status_t Surface::setDirtyRect(const Rect* dirtyRect) {
+    Mutex::Autolock lock(mMutex);
+    mDirtyRect = *dirtyRect;
+    return NO_ERROR;
 }
 
 int Surface::setSwapInterval(int interval) {
@@ -338,10 +345,13 @@ int Surface::queueBuffer(android_native_buffer_t* buffer, int fenceFd) {
     Rect crop;
     mCrop.intersect(Rect(buffer->width, buffer->height), &crop);
 
+    Rect dirtyRect = mDirtyRect.isEmpty() ?
+        Rect(buffer->width, buffer->height) : mDirtyRect;
+
     sp<Fence> fence(fenceFd >= 0 ? new Fence(fenceFd) : Fence::NO_FENCE);
     IGraphicBufferProducer::QueueBufferOutput output;
     IGraphicBufferProducer::QueueBufferInput input(timestamp, isAutoTimestamp,
-            mDataSpace, crop, mScalingMode, mTransform ^ mStickyTransform,
+            mDataSpace, crop, dirtyRect, mScalingMode, mTransform ^ mStickyTransform,
             mSwapIntervalZero, fence, mStickyTransform);
 
     if (mConnectedToCpu || mDirtyRegion.bounds() == Rect::INVALID_RECT) {

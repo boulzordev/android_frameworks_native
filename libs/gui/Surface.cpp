@@ -397,6 +397,7 @@ int Surface::queueBuffer(android_native_buffer_t* buffer, int fenceFd) {
         mDirtyRegion = Region::INVALID_REGION;
     }
 
+    mDirtyRect.clear();
     return err;
 }
 

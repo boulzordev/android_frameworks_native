@@ -533,6 +533,10 @@ private:
 
     mat4 mColorMatrix;
     bool mHasColorMatrix;
+#ifdef QCOM_BSP
+    // Flag to disable external rotation animation feature.
+    bool mDisableExtAnimation;
+#endif
 };
 
 }; // namespace android

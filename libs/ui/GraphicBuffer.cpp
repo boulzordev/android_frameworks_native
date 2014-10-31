@@ -373,7 +373,7 @@ status_t GraphicBuffer::unflatten(
     // should not come close to this number, and the number itself was simply
     // chosen to be high enough to not cause issues and low enough to prevent
     // overflow problems.
-    const size_t maxNumber = 4096;
+    const size_t maxNumber = UINT_MAX / sizeof(int);
     if (numFds >= maxNumber || numInts >= (maxNumber - 11)) {
         width = height = stride = format = usage = 0;
         handle = NULL;

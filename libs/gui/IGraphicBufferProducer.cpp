@@ -42,7 +42,9 @@ enum {
     QUEUE_BUFFER,
     CANCEL_BUFFER,
     QUERY,
+#ifdef QCOM_BSP
     SET_BUFFERS_SIZE,
+#endif
     CONNECT,
     DISCONNECT,
     SET_SIDEBAND_STREAM,
@@ -288,6 +290,7 @@ public:
         return result;
     }
 
+#ifdef QCOM_BSP
     virtual status_t setBuffersSize(int size) {
         Parcel data, reply;
         data.writeInterfaceToken(IGraphicBufferProducer::getInterfaceDescriptor());
@@ -299,6 +302,8 @@ public:
         result = reply.readInt32();
         return result;
     }
+
+#endif
 
     virtual status_t setGenerationNumber(uint32_t generationNumber) {
         Parcel data, reply;
@@ -436,6 +441,7 @@ status_t BnGraphicBufferProducer::onTransact(
             reply->writeInt32(res);
             return NO_ERROR;
         }
+#ifdef QCOM_BSP
         case SET_BUFFERS_SIZE: {
             CHECK_INTERFACE(IGraphicBufferProducer, data, reply);
             int size = data.readInt32();
@@ -443,6 +449,7 @@ status_t BnGraphicBufferProducer::onTransact(
             reply->writeInt32(res);
             return NO_ERROR;
         }
+#endif
         case CONNECT: {
             CHECK_INTERFACE(IGraphicBufferProducer, data, reply);
             sp<IProducerListener> listener;

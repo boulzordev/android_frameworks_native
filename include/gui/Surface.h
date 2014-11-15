@@ -156,7 +156,9 @@ private:
     int dispatchSetCrop(va_list args);
     int dispatchSetPostTransformCrop(va_list args);
     int dispatchSetUsage(va_list args);
+#ifdef QCOM_BSP
     int dispatchSetBuffersSize(va_list args);
+#endif
     int dispatchLock(va_list args);
     int dispatchUnlockAndPost(va_list args);
     int dispatchSetSidebandStream(va_list args);
@@ -187,7 +189,9 @@ protected:
     virtual int setCrop(Rect const* rect);
     virtual int setUsage(uint32_t reqUsage);
     virtual void setSurfaceDamage(android_native_rect_t* rects, size_t numRects);
+#ifdef QCOM_BSP
     virtual int setBuffersSize(int size);
+#endif
 
 public:
     virtual int lock(ANativeWindow_Buffer* outBuffer, ARect* inOutDirtyBounds);
@@ -241,9 +245,11 @@ private:
     // at the next deuque operation. It is initialized to 0.
     uint32_t mReqUsage;
 
+#ifdef QCOM_BSP
     // mReqSize is the size of the buffer that will be requested
     // at the next dequeue operation. It is initialized to 0.
     uint32_t mReqSize;
+#endif
 
     // mTimestamp is the timestamp that will be used for the next buffer queue
     // operation. It defaults to NATIVE_WINDOW_TIMESTAMP_AUTO, which means that

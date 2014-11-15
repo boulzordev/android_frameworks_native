@@ -517,6 +517,7 @@ public:
     // Returns the name of the connected consumer.
     virtual String8 getConsumerName() const = 0;
 
+#ifdef QCOM_BSP
     // setBufferSize enables to specify the user defined size of the buffer
     // that needs to be allocated by surfaceflinger for its client. This is
     // useful for cases where the client doesn't want the gralloc to calculate
@@ -524,6 +525,7 @@ public:
     // calculate the size for the buffer. this will take effect from next
     // dequeue buffer.
     virtual status_t setBuffersSize(int size) = 0;
+#endif
 
 };
 

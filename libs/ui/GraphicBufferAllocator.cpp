@@ -94,6 +94,7 @@ status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
         PixelFormat format, uint32_t usage, buffer_handle_t* handle,
         uint32_t* stride)
 {
+#ifdef QCOM_BSP
     status_t err = alloc(width, height, format, usage, handle, stride, 0);
     return err;
 }
@@ -103,6 +104,7 @@ status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
                                        buffer_handle_t* handle,
                                        uint32_t* stride, uint32_t bufferSize)
 {
+#endif
     ATRACE_CALL();
 
     // make sure to not allocate a N x 0 or 0 x N buffer, since this is

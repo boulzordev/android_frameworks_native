@@ -120,7 +120,7 @@ private:
     virtual status_t setGenerationNumber(uint32_t generationNumber);
     virtual String8 getConsumerName() const override;
             uint32_t format, uint32_t usage);
-#ifdef QCOM_BSP
+#ifdef QCOM_BSP_LEGACY
     virtual status_t setBuffersSize(int size);
 #endif
 

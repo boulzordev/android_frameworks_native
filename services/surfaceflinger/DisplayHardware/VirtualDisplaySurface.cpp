@@ -602,7 +602,7 @@ status_t VirtualDisplaySurface::setGenerationNumber(uint32_t /* generation */) {
 String8 VirtualDisplaySurface::getConsumerName() const {
     return String8("VirtualDisplaySurface");
 }
-#ifdef QCOM_BSP
+#ifdef QCOM_BSP_LEGACY
 status_t VirtualDisplaySurface::setBuffersSize(int size) {
    return mSource[SOURCE_SINK]->setBuffersSize(size);
 }

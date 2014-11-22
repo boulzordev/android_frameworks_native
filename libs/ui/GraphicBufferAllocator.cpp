@@ -94,7 +94,7 @@ status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
         PixelFormat format, uint32_t usage, buffer_handle_t* handle,
         uint32_t* stride)
 {
-#ifdef QCOM_BSP
+#ifdef QCOM_BSP_LEGACY
     status_t err = alloc(width, height, format, usage, handle, stride, 0);
     return err;
 }
@@ -119,7 +119,7 @@ status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
     usage &= GRALLOC_USAGE_ALLOC_MASK;
 
     int outStride = 0;
-#ifdef QCOM_BSP
+#ifdef QCOM_BSP_LEGACY
     if(bufferSize) {
         err = mAllocDev->allocSize(mAllocDev, static_cast<int>(width),
             static_cast<int>(height), format, static_cast<int>(usage), handle,

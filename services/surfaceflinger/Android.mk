@@ -106,9 +106,15 @@ ifeq ($(TARGET_USES_QCOM_BSP), true)
     LOCAL_SHARED_LIBRARIES += libqdutils
 endif
 
-LOCAL_MODULE := libsurfaceflinger
-
 LOCAL_CFLAGS += -Wall -Werror -Wunused -Wunreachable-code
+ifeq ($(TARGET_HAVE_UI_BLUR),true)
+    LOCAL_SRC_FILES += LayerBlur.cpp
+    LOCAL_CFLAGS += -DWITH_UIBLUR
+    LOCAL_SHARED_LIBRARIES += libuiblur
+    LOCAL_C_INCLUDES += $(TARGET_OUT_HEADERS)/ui
+endif
+
+LOCAL_MODULE:= libsurfaceflinger
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -21,7 +21,7 @@
 #include <gui/BufferItem.h>
 
 #include <cutils/properties.h>
-#if QCOM_BSP
+#ifdef QCOM_BSP
 #include <gralloc_priv.h>
 #endif
 // ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ VirtualDisplaySurface::VirtualDisplaySurface(HWComposer& hwc,
     // on usage bits.
     mDefaultOutputFormat = sinkFormat;
     if((sinkUsage & GRALLOC_USAGE_HW_VIDEO_ENCODER)
-#if QCOM_BSP
+#ifdef QCOM_BSP
             && (sinkUsage & GRALLOC_USAGE_PRIVATE_WFD)
 #endif
       )

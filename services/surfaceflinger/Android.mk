@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := \
     FrameTracker.cpp \
     Layer.cpp \
     LayerDim.cpp \
+    LayerBlur.cpp \
     MessageQueue.cpp \
     MonitoredProducer.cpp \
     SurfaceFlinger.cpp \
@@ -112,10 +113,9 @@ endif
 
 LOCAL_CFLAGS += -Wall -Werror -Wunused -Wunreachable-code
 ifeq ($(TARGET_HAVE_UI_BLUR),true)
-    LOCAL_SRC_FILES += LayerBlur.cpp
-    LOCAL_CFLAGS += -DWITH_UIBLUR
-    LOCAL_SHARED_LIBRARIES += libuiblur
     LOCAL_C_INCLUDES += $(TARGET_OUT_HEADERS)/ui
+    LOCAL_SHARED_LIBRARIES += libuiblur
+    LOCAL_CFLAGS += -DUI_BLUR
 endif
 
 LOCAL_MODULE:= libsurfaceflinger

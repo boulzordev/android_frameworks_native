@@ -29,6 +29,10 @@
 
 #include <gui/Surface.h>
 
+#ifdef EGL_NEEDS_FNW
+#include <ui/FramebufferNativeWindow.h>
+#endif
+
 #include <hardware/gralloc.h>
 
 #include "DisplayHardware/DisplaySurface.h"
@@ -90,7 +94,11 @@ DisplayDevice::DisplayDevice(
       mActiveConfig(0)
 {
     mNativeWindow = new Surface(producer, false);
+#ifndef EGL_NEEDS_FNW
     ANativeWindow* const window = mNativeWindow.get();
+#else
+    ANativeWindow* const window = new FramebufferNativeWindow();
+#endif
 
     /*
      * Create our display's surface

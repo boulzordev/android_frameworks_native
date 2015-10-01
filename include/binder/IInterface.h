@@ -28,6 +28,8 @@ class IInterface : public virtual RefBase
 {
 public:
             IInterface();
+            sp<IBinder>         asBinder();
+	    sp<const IBinder>   asBinder() const;
             static sp<IBinder>  asBinder(const IInterface*);
             static sp<IBinder>  asBinder(const sp<IInterface>&);
 

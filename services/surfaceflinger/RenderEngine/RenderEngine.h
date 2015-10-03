@@ -67,7 +67,6 @@ public:
     virtual void dump(String8& result);
 
     // helpers
-    void flush();
     void clearWithColor(float red, float green, float blue, float alpha);
     void fillRegionWithColor(const Region& region, uint32_t height,
             float red, float green, float blue, float alpha);

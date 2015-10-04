@@ -293,12 +293,8 @@ public:
           dirtyRect(dirtyRect),scalingMode(scalingMode), transform(transform), stickyTransform(sticky),
           async(async), fence(fence) { }
 #endif
-
         inline void deflate(int64_t* outTimestamp, bool* outIsAutoTimestamp,
                 android_dataspace* outDataSpace, Rect* outCrop, 
-#ifdef QCOM_BSP
-		Rect* outDirtyRect,
-#endif
 		int* outScalingMode,
                 uint32_t* outTransform, bool* outAsync, sp<Fence>* outFence,
                 uint32_t* outStickyTransform = NULL) const {
@@ -306,9 +302,6 @@ public:
             *outIsAutoTimestamp = bool(isAutoTimestamp);
             *outDataSpace = dataSpace;
             *outCrop = crop;
-#ifdef QCOM_BSP
-            *outDirtyRect = dirtyRect;
-#endif
             *outScalingMode = scalingMode;
             *outTransform = transform;
             *outAsync = bool(async);
@@ -318,6 +311,27 @@ public:
             }
         }
 
+#ifdef QCOM_BSP
+        inline void deflate(int64_t* outTimestamp, bool* outIsAutoTimestamp,
+                android_dataspace* outDataSpace, Rect* outCrop, 
+		Rect* outDirtyRect,
+		int* outScalingMode,
+                uint32_t* outTransform, bool* outAsync, sp<Fence>* outFence,
+                uint32_t* outStickyTransform = NULL) const {
+            *outTimestamp = timestamp;
+            *outIsAutoTimestamp = bool(isAutoTimestamp);
+            *outDataSpace = dataSpace;
+            *outCrop = crop;
+            *outDirtyRect = dirtyRect;
+            *outScalingMode = scalingMode;
+            *outTransform = transform;
+            *outAsync = bool(async);
+            *outFence = fence;
+            if (outStickyTransform != NULL) {
+                *outStickyTransform = stickyTransform;
+            }
+        }
+#endif
         // Flattenable protocol
         size_t getFlattenedSize() const;
         size_t getFdCount() const;

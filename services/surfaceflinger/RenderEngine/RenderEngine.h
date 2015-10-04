@@ -106,7 +106,13 @@ public:
     virtual void disableBlending() = 0;
 #ifdef QCOM_BSP
     virtual void startTileComposition(int x, int y, int width,
-          int height, bool preserve){}
+          int height, bool preserve){
+        (void)x;
+        (void)y;
+        (void)width;
+        (void)height;
+        (void)preserve;
+    }
     virtual void endTileComposition(unsigned int) {}
 #endif
 

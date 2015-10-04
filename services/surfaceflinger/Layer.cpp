@@ -594,6 +594,8 @@ void Layer::setGeometry(
     // set dest_rect to display width and height, if external_only flag
     // for the layer is enabled or if its yuvLayer in extended mode.
     uint32_t x = 0, y = 0;
+    (void)x;
+    (void)y;
     uint32_t w = hw->getWidth();
     uint32_t h = hw->getHeight();
     bool extendedMode = SurfaceFlinger::isExtendedMode();

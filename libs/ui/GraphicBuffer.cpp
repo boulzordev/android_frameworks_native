@@ -197,13 +197,15 @@ status_t GraphicBuffer::initSize(uint32_t w, uint32_t h, PixelFormat format,
                                  uint32_t reqUsage, uint32_t bufferSize)
 {
     GraphicBufferAllocator& allocator = GraphicBufferAllocator::get();
+    uint32_t newStride = static_cast<uint32_t>(stride);
     status_t err = allocator.alloc(w, h, format,
-                                   reqUsage, &handle, &stride, bufferSize);
+                                   reqUsage, &handle, &newStride, bufferSize);
     if (err == NO_ERROR) {
-        this->width  = w;
-        this->height = h;
+        this->width  = static_cast<int>(w);
+        this->height = static_cast<int>(h);
         this->format = format;
-        this->usage  = reqUsage;
+        this->usage  = static_cast<int>(reqUsage);
+        this->stride = static_cast<int>(newStride);
     }
     return err;
 }

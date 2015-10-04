@@ -54,15 +54,15 @@ VirtualDisplaySurface::VirtualDisplaySurface(HWComposer& hwc,
         bool secure)
 :   ConsumerBase(bqConsumer),
     mHwc(hwc),
-    mDisplayId(NO_MEMORY),
     mDisplayName(name),
+    mForceHwcCopy(false),
+    mDisplayId(NO_MEMORY),
+    mSecure(false),
     mOutputUsage(GRALLOC_USAGE_HW_COMPOSER),
     mProducerSlotSource(0),
     mDbgState(DBG_STATE_IDLE),
     mDbgLastCompositionType(COMPOSITION_UNKNOWN),
-    mMustRecompose(false),
-    mForceHwcCopy(false),
-    mSecure(false)
+    mMustRecompose(false)
 {
     mSource[SOURCE_SINK] = sink;
     mSource[SOURCE_SCRATCH] = bqProducer;

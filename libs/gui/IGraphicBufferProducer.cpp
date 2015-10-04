@@ -281,6 +281,11 @@ public:
         data.writeInterfaceToken(IGraphicBufferProducer::getInterfaceDescriptor());
         data.writeInt32(static_cast<int32_t>(allow));
         status_t result = remote()->transact(ALLOW_ALLOCATION, data, &reply);
+        if (result != NO_ERROR) {
+            return result;
+        }
+        result = reply.readInt32();
+        return result;
     }
 
     virtual status_t setBuffersSize(int size) {
@@ -430,14 +435,14 @@ status_t BnGraphicBufferProducer::onTransact(
             reply->writeInt32(value);
             reply->writeInt32(res);
             return NO_ERROR;
-        } break;
+        }
         case SET_BUFFERS_SIZE: {
             CHECK_INTERFACE(IGraphicBufferProducer, data, reply);
             int size = data.readInt32();
             status_t res = setBuffersSize(size);
             reply->writeInt32(res);
             return NO_ERROR;
-        } break;
+        }
         case CONNECT: {
             CHECK_INTERFACE(IGraphicBufferProducer, data, reply);
             sp<IProducerListener> listener;

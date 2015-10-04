@@ -129,13 +129,13 @@ status_t BnGraphicBufferAlloc::onTransact(
                 reply->writeStrongBinder( new BufferReference(result) );
             }
             return NO_ERROR;
-        } break;
+        }
         case SET_GRAPHIC_BUFFER_SIZE: {
             CHECK_INTERFACE(IGraphicBufferAlloc, data, reply);
             int size = data.readInt32();
             setGraphicBufferSize(size);
             return NO_ERROR;
-        } break;
+        }
         default:
             return BBinder::onTransact(code, data, reply, flags);
     }

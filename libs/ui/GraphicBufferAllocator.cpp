@@ -94,14 +94,14 @@ status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
         PixelFormat format, uint32_t usage, buffer_handle_t* handle,
         uint32_t* stride)
 {
-    status_t err = alloc(w, h, format, usage, handle, stride, 0);
+    status_t err = alloc(width, height, format, usage, handle, stride, 0);
     return err;
 }
 
-status_t GraphicBufferAllocator::alloc(uint32_t w, uint32_t h,
-                                       PixelFormat format, int usage,
+status_t GraphicBufferAllocator::alloc(uint32_t width, uint32_t height,
+                                       PixelFormat format, uint32_t usage,
                                        buffer_handle_t* handle,
-                                       int32_t* stride, uint32_t bufferSize)
+                                       uint32_t* stride, uint32_t bufferSize)
 {
     ATRACE_CALL();
 
@@ -119,9 +119,9 @@ status_t GraphicBufferAllocator::alloc(uint32_t w, uint32_t h,
     int outStride = 0;
 #ifdef QCOM_BSP
     if(bufferSize) {
-        err = mAllocDev->alloc(mAllocDev, static_cast<int>(width),
+        err = mAllocDev->allocSize(mAllocDev, static_cast<int>(width),
             static_cast<int>(height), format, static_cast<int>(usage), handle,
-            &outStride, bufferSize);
+            &outStride, static_cast<int>(bufferSize));
 
     } else {
         err = mAllocDev->alloc(mAllocDev, static_cast<int>(width),
@@ -150,10 +150,10 @@ status_t GraphicBufferAllocator::alloc(uint32_t w, uint32_t h,
         alloc_rec_t rec;
         rec.width = width;
         rec.height = height;
-        rec.stride = *stride;
+        rec.stride = static_cast<uint32_t>(*stride);
         rec.format = format;
         rec.usage = usage;
-        rec.size = static_cast<size_t>(height * (*stride) * bpp);
+        rec.size = static_cast<size_t>(height * static_cast<uint32_t>(*stride) * bpp);
         list.add(*handle, rec);
     }
 

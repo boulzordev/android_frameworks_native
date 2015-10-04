@@ -1128,6 +1128,7 @@ void SurfaceFlinger::rebuildLayerStacks() {
                 for (size_t i=0 ; i<count ; i++) {
                     const sp<Layer>& layer(layers[i]);
                     const Layer::State& s(layer->getDrawingState());
+                    (void)s;
                     Region drawRegion(tr.transform(
                             layer->visibleNonTransparentRegion));
                     drawRegion.andSelf(bounds);
@@ -2279,6 +2280,7 @@ bool SurfaceFlinger::doComposeSurfaces(const sp<const DisplayDevice>& hw, const 
         // we're using h/w composer
 #ifdef QCOM_BSP
         int fbWidth= hw->getWidth();
+        (void)fbWidth;
         int fbHeight= hw->getHeight();
         /* if GPUTileRender optimization property is on & can be used
          * i) Enable EGL_SWAP_PRESERVED flag
@@ -3798,7 +3800,7 @@ status_t SurfaceFlinger::captureScreenImplLocked(
                     result = BAD_VALUE;
                 }
                 // queueBuffer takes ownership of syncFd
-                result = window->queueBuffer(window, buffer, syncFd);
+                result = window->queueBuffer(window, buffer, -1);
             }
         } else {
             result = BAD_VALUE;

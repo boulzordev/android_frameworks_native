@@ -64,8 +64,8 @@ public:
     status_t alloc(uint32_t w, uint32_t h, PixelFormat format, uint32_t usage,
             buffer_handle_t* handle, uint32_t* stride);
 
-    status_t alloc(uint32_t w, uint32_t h, PixelFormat format, int usage,
-            buffer_handle_t* handle, int32_t* stride, uint32_t bufferSize);
+    status_t alloc(uint32_t w, uint32_t h, PixelFormat format, uint32_t usage,
+            buffer_handle_t* handle, uint32_t* stride, uint32_t bufferSize);
 
     status_t free(buffer_handle_t handle);
 

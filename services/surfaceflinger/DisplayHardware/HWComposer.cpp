@@ -381,7 +381,7 @@ status_t HWComposer::queryDisplayProperties(int disp) {
     }
 
     int currentConfig = getActiveConfig(disp);
-    if (currentConfig < 0 || currentConfig > (numConfigs-1)) {
+    if (currentConfig < 0 || currentConfig > (static_cast<int>(numConfigs)-1)) {
         ALOGE("%s: Invalid display config! %d", __FUNCTION__, currentConfig);
         currentConfig = 0;
     }
@@ -1472,6 +1472,7 @@ bool HWComposer::canHandleOverlapArea(int32_t id, Rect unionDr) {
     DisplayData& disp(mDisplayData[id]);
     float layerAreaSum = 0;
     float drArea = ((unionDr.right-unionDr.left)* (unionDr.bottom-unionDr.top));
+    (void)drArea;
     hwc_layer_1_t& fbLayer = disp.list->hwLayers[disp.list->numHwLayers-1];
     hwc_rect_t fbDisplayFrame  = fbLayer.displayFrame;
     float fbLayerArea = ((fbDisplayFrame.right - fbDisplayFrame.left)*

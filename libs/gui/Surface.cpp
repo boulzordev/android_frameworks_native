@@ -20,8 +20,10 @@
 
 #include <android/native_window.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wzero-length-array"
 #include <sync/sync.h>
-
+#pragma GCC diagnostic pop
 #include <binder/Parcel.h>
 
 #include <utils/Log.h>
@@ -40,7 +42,11 @@
 #include <private/gui/ComposerService.h>
 
 #ifdef QCOM_BSP
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfour-char-constants"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
 #include <gralloc_priv.h>
+#pragma GCC diagnostic pop
 #endif
 
 namespace android {
@@ -368,8 +374,8 @@ int Surface::queueBuffer(android_native_buffer_t* buffer, int fenceFd) {
 #ifdef QCOM_BSP
     Rect dirtyRect = mDirtyRect;
     if(dirtyRect.isEmpty()) {
-        int drWidth = mUserWidth ? mUserWidth : mDefaultWidth;
-        int drHeight = mUserHeight ? mUserHeight : mDefaultHeight;
+        int drWidth = static_cast<int>(mUserWidth ? mUserWidth : mDefaultWidth);
+        int drHeight = static_cast<int>(mUserHeight ? mUserHeight : mDefaultHeight);
         dirtyRect = Rect(drWidth, drHeight);
     }
 #endif
@@ -1059,9 +1065,9 @@ status_t Surface::lock(
         // we're intending to do software rendering from this point
         // Do not overwrite the mReqUsage flag which was set by the client
 #ifdef QCOM_BSP
-        setUsage(mReqUsage & GRALLOC_USAGE_PRIVATE_EXTERNAL_ONLY |
-                mReqUsage & GRALLOC_USAGE_PRIVATE_INTERNAL_ONLY |
-                mReqUsage & GRALLOC_USAGE_PRIVATE_SECURE_DISPLAY |
+        setUsage((mReqUsage & GRALLOC_USAGE_PRIVATE_EXTERNAL_ONLY) |
+                (mReqUsage & GRALLOC_USAGE_PRIVATE_INTERNAL_ONLY) |
+                (mReqUsage & GRALLOC_USAGE_PRIVATE_SECURE_DISPLAY) |
                     GRALLOC_USAGE_SW_READ_OFTEN |
                     GRALLOC_USAGE_SW_WRITE_OFTEN);
 #else

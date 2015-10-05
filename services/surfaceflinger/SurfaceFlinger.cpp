@@ -2733,7 +2733,7 @@ uint32_t SurfaceFlinger::setClientStateLocked(
         }
         if (what & layer_state_t::eBlurMaskAlphaThresholdChanged) {
             if (layer->setBlurMaskAlphaThreshold(s.blurMaskAlphaThreshold)) {
-                flags != eTraversalNeeded;
+                flags |= eTraversalNeeded;
             }
         }
         if (what & layer_state_t::eSizeChanged) {

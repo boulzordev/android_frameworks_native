@@ -128,6 +128,8 @@ void LayerBlur::onDraw(const sp<const DisplayDevice>& hw, const Region& /*clip*/
     const Layer::State& s(getDrawingState());
     float layerX = s.transform.tx();
     float layerY = s.transform.ty();
+    (void)layerX;
+    (void)layerY;
 
 
     if (s.alpha==0) {

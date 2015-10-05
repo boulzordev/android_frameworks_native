@@ -737,6 +737,10 @@ status_t Parcel::writeString16(const String16& str)
     return writeString16(str.string(), str.size());
 }
 
+int Parcel::writeString16(const uint16_t*str, size_t len){
+    return writeString16(str, len);
+}
+
 status_t Parcel::writeString16(const char16_t* str, size_t len)
 {
     if (str == NULL) return writeInt32(-1);

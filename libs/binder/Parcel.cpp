@@ -737,10 +737,6 @@ status_t Parcel::writeString16(const String16& str)
     return writeString16(str.string(), str.size());
 }
 
-int Parcel::writeString16(const uint16_t*str, size_t len){
-    return writeString16(str, len);
-}
-
 status_t Parcel::writeString16(const char16_t* str, size_t len)
 {
     if (str == NULL) return writeInt32(-1);
@@ -1865,3 +1861,9 @@ void Parcel::Blob::clear() {
 }
 
 }; // namespace android
+extern "C" {
+void _ZN7android6Parcel13writeString16EPKtj(int *retval, void *self, const uint16_t *str, size_t len){
+    *retval = ((android::Parcel*)self)->writeString16(static_cast<const char16_t*>(str), len);
+}
+} // extern "C"
+

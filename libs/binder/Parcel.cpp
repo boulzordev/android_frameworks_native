@@ -841,6 +841,11 @@ status_t Parcel::writeString16(const char16_t* str, size_t len)
     return err;
 }
 
+extern "C" int _ZN7android6Parcel13writeString16EPKDsj(const char16_t* str, size_t len);
+extern "C" int _ZN7android6Parcel13writeString16EPKtj(uint16_t* str, size_t len){
+    return _ZN7android6Parcel13writeString16EPKDsj((const char16_t*)str, len); 
+}
+
 status_t Parcel::writeStrongBinder(const sp<IBinder>& val)
 {
     return flatten_binder(ProcessState::self(), val, this);

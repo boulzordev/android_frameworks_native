@@ -48,8 +48,7 @@ class SensorEventQueue;
 // ----------------------------------------------------------------------------
 
 class SensorManager :
-    public ASensorManager,
-    public Singleton<SensorManager>
+    public ASensorManager
 {
 public:
     static SensorManager& getInstanceForPackage(const String16& packageName) {
@@ -101,8 +100,8 @@ public:
 
         return *sensorManager;
     }
+
     SensorManager(const String16& opPackageName);
-    SensorManager(): SensorManager(String16("legacypackage")){}
     ~SensorManager();
 
     ssize_t getSensorList(Sensor const* const** list) const;

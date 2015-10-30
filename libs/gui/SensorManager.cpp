@@ -36,8 +36,6 @@
 namespace android {
 // ----------------------------------------------------------------------------
 
-ANDROID_SINGLETON_STATIC_INSTANCE(SensorManager)
-
 SensorManager::SensorManager(const String16& opPackageName)
     : mSensorList(0), mOpPackageName(opPackageName)
 {

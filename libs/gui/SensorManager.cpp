@@ -45,12 +45,6 @@ SensorManager::SensorManager(const String16& opPackageName)
     assertStateLocked();
 }
 
-SensorManager::SensorManager()
-    : mSensorList(0),
-    mOpPackageName(String16("legacybackport")){
-    assertStateLocked();
-}
-
 SensorManager::~SensorManager()
 {
     free(mSensorList);
@@ -160,9 +154,6 @@ sp<SensorEventQueue> SensorManager::createEventQueue(String8 packageName, int mo
     }
     return queue;
 }
-sp<SensorEventQueue> SensorManager::createEventQueue(){
-    return createEventQueue(String8("legacybackport"), 0);
-}
 
 bool SensorManager::isDataInjectionEnabled() {
     Mutex::Autolock _l(mLock);
@@ -171,14 +162,6 @@ bool SensorManager::isDataInjectionEnabled() {
     }
     return false;
 }
- 
+
 // ----------------------------------------------------------------------------
 }; // namespace android
-
-//extern "C" {
-//void _ZN7android13SensorManagerC1ERKNS_8String16E(void *obj, const String16 &opPackageName);
-//void _ZN7android13SensorManagerC1Ev(void *obj) {
-//    return _ZN7android13SensorManagerC1ERKNS_8String16E(obj, String16("legacybackport"));
-//}
-//}
-

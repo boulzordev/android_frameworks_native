@@ -102,13 +102,12 @@ public:
         return *sensorManager;
     }
     SensorManager(const String16& opPackageName);
-    SensorManager();
+    SensorManager(): SensorManager(String16("legacypackage")){}
     ~SensorManager();
 
     ssize_t getSensorList(Sensor const* const** list) const;
     Sensor const* getDefaultSensor(int type);
     sp<SensorEventQueue> createEventQueue(String8 packageName = String8(""), int mode = 0);
-    sp<SensorEventQueue> createEventQueue();
     bool isDataInjectionEnabled();
 
 private:

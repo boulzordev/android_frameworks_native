@@ -160,6 +160,9 @@ sp<SensorEventQueue> SensorManager::createEventQueue(String8 packageName, int mo
     }
     return queue;
 }
+sp<SensorEventQueue> SensorManager::createEventQueue(){
+    return createEventQueue(String8("legacybackport"), 0);
+}
 
 bool SensorManager::isDataInjectionEnabled() {
     Mutex::Autolock _l(mLock);
@@ -172,13 +175,10 @@ bool SensorManager::isDataInjectionEnabled() {
 // ----------------------------------------------------------------------------
 }; // namespace android
 
-extern "C" {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-prototypes"
-void _ZN7android13SensorManager16createEventQueueENS_7String8Ei(void *retval, void *self, android::String8 packageName, int mode);
-void _ZN7android13SensorManager16createEventQueueEv(void *retval, void *self){
-    return _ZN7android13SensorManager16createEventQueueENS_7String8Ei(retval, self, android::String8("legacybackport"), 0);
-}
-#pragma GCC diagnostic pop
-} // extern "C"
+//extern "C" {
+//void _ZN7android13SensorManagerC1ERKNS_8String16E(void *obj, const String16 &opPackageName);
+//void _ZN7android13SensorManagerC1Ev(void *obj) {
+//    return _ZN7android13SensorManagerC1ERKNS_8String16E(obj, String16("legacybackport"));
+//}
+//}
 

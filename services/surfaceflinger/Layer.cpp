@@ -325,7 +325,9 @@ Rect Layer::reduce(const Rect& win, const Region& exclude) const{
     if (CC_LIKELY(exclude.isEmpty())) {
         return win;
     }
-    if (exclude.isRect()) {
+    Rect tmp;
+    win.intersect(exclude.getBounds(), &tmp);
+    if (exclude.isRect() && !tmp.isEmpty()) {
         return win.reduce(exclude.getBounds());
     }
     return Region(win).subtract(exclude).getBounds();
@@ -666,8 +668,8 @@ void Layer::onDraw(const sp<const DisplayDevice>& hw, const Region& clip,
     bool blackOutLayer = isProtected() || (isSecure() && !hw->isSecure());
 
     RenderEngine& engine(mFlinger->getRenderEngine());
-
-    if (!blackOutLayer || canAllowGPUForProtected()) {
+    if (!blackOutLayer ||
+            ((hw->getDisplayType() == HWC_DISPLAY_PRIMARY) && canAllowGPUForProtected())) {
         // TODO: we could be more subtle with isFixedSize()
         const bool useFiltering = getFiltering() || needsFiltering(hw) || isFixedSize();
 
